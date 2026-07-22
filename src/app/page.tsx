@@ -1,65 +1,97 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Hero } from "@/components/Hero";
+import { SectionShowcase } from "@/components/SectionShowcase";
+import { PLAYLISTS, CONSEJEROS } from "@/lib/site-config";
+import { getPlaylistVideos, getSectionVideos } from "@/lib/youtube";
 
-export default function Home() {
+// Vuelve a generar la página como máximo una vez por hora (ISR), para que
+// los videos nuevos aparezcan solos sin necesitar un redeploy.
+export const revalidate = 3600;
+
+export default async function HomePage() {
+  const [capitulos, entrevistas, archivo] = await Promise.all([
+    // Capítulos cae de vuelta al feed general del canal mientras no exista
+    // una playlist propia — así siempre hay contenido real desde el día uno.
+    getSectionVideos(PLAYLISTS.capitulos, 3),
+    getPlaylistVideos(PLAYLISTS.entrevistas, 3),
+    getPlaylistVideos(PLAYLISTS.archivo, 3),
+  ]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <Hero />
+
+      <SectionShowcase
+        numero="01"
+        titulo="Capítulos"
+        descripcion="Las sesiones completas del Consejo: análisis, deliberación y veredicto sobre cada jornada del Táchira."
+        videos={capitulos}
+        href="/capitulos"
+        actaPrefix="ACTA"
+        emptyMessage="Todavía no hay capítulos conectados. Configura YOUTUBE_PLAYLIST_CAPITULOS para que aparezcan aquí."
+      />
+
+      <SectionShowcase
+        numero="02"
+        titulo="Entrevistas"
+        descripcion="Testimonios directos: jugadores, cuerpo técnico y voces cercanas al club, interrogadas por el Consejo."
+        videos={entrevistas}
+        href="/entrevistas"
+        actaPrefix="ENTREVISTA"
+        emptyMessage="Todavía no hay entrevistas conectadas. Configura YOUTUBE_PLAYLIST_ENTREVISTAS para que aparezcan aquí."
+      />
+
+      <SectionShowcase
+        numero="03"
+        titulo="Archivo"
+        descripcion="Expedientes históricos del Aurinegro: momentos, temporadas y hechos que el Consejo no deja prescribir."
+        videos={archivo}
+        href="/archivo"
+        actaPrefix="ARCHIVO"
+        emptyMessage="Todavía no hay material de archivo conectado. Configura YOUTUBE_PLAYLIST_ARCHIVO para que aparezcan aquí."
+      />
+
+      <section className="py-16 border-t hairline">
+        <div className="container-page">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+            <div>
+              <p className="eyebrow mb-2">Expediente 04</p>
+              <h2
+                className="text-3xl sm:text-4xl"
+                style={{ fontFamily: "var(--font-display)", letterSpacing: "0.01em" }}
+              >
+                El Consejo
+              </h2>
+              <p className="text-[var(--color-paper-dim)] mt-2 max-w-xl">
+                Los integrantes que se sientan a la mesa cada semana.
+              </p>
+            </div>
+            <Link href="/el-consejo" className="btn-secondary shrink-0 self-start sm:self-end">
+              Ver todo →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {CONSEJEROS.map((consejero) => (
+              <div key={consejero.slug} className="card-acta p-6">
+                <div className="h-16 w-16 rounded-full bg-[var(--color-ink-3)] border hairline mb-4 flex items-center justify-center">
+                  <span
+                    className="text-xl"
+                    style={{ fontFamily: "var(--font-display)", color: "var(--color-yellow)" }}
+                  >
+                    {consejero.nombre.charAt(0)}
+                  </span>
+                </div>
+                <h3 className="font-semibold">{consejero.nombre}</h3>
+                <p className="eyebrow mt-1 mb-3">{consejero.rol}</p>
+                <p className="text-sm text-[var(--color-paper-dim)] line-clamp-3">
+                  {consejero.bio}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+    </>
   );
 }

@@ -1,26 +1,174 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------
+   TOKENS — Consejo de Sabios
+   Amarillo / negro / blanco del Táchira, con vocabulario visual de
+   "expediente" y "acta de sesión" (el podcast como deliberación formal).
+--------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-ink: #0b0b0a;          /* negro cálido de fondo */
+  --color-ink-2: #17140f;        /* panel un poco más claro que el fondo */
+  --color-ink-3: #211d15;        /* bordes / superficies elevadas */
+  --color-yellow: #f2b705;       /* amarillo Táchira, saturado no neón */
+  --color-yellow-deep: #b88a03;  /* amarillo oscurecido: bordes, hover */
+  --color-yellow-dim: #6b5304;   /* amarillo casi ocre, para texto secundario sobre negro */
+  --color-paper: #f6f2e7;        /* "blanco papel", no blanco puro */
+  --color-paper-dim: #a8a297;    /* texto secundario sobre negro */
+  --color-line: rgba(246, 242, 231, 0.12);
+  --color-line-strong: rgba(246, 242, 231, 0.22);
+
+  --font-display: "Anton", "Arial Narrow Bold", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --container-max: 1180px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--color-ink);
+  --color-ink-2: var(--color-ink-2);
+  --color-ink-3: var(--color-ink-3);
+  --color-yellow: var(--color-yellow);
+  --color-yellow-deep: var(--color-yellow-deep);
+  --color-paper: var(--color-paper);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Textura sutil tipo papel/grano de estadio, no decorativa: refuerza la
+   idea de "documento" sin llamar la atención sobre sí misma. */
+.grain-bg {
+  position: relative;
+  isolation: isolate;
+}
+.grain-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.container-page {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-yellow);
+}
+
+.hairline {
+  border-color: var(--color-line);
+}
+
+.card-acta {
+  background: var(--color-ink-2);
+  border: 1px solid var(--color-line);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.card-acta:hover {
+  border-color: var(--color-yellow-deep);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-yellow);
+  color: var(--color-ink);
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.btn-primary:hover {
+  background: #ffd230;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-paper);
+  padding: 0.75rem 1.5rem;
+  border-radius: 2px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.btn-secondary:hover {
+  border-color: var(--color-yellow);
+  color: var(--color-yellow);
+}
+
+/* Modal de reproducción de video */
+.video-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(11, 11, 10, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.video-modal-frame {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  background: black;
+  border: 1px solid var(--color-yellow-deep);
+}
+.video-modal-frame iframe {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.4s ease both;
 }
