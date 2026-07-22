@@ -1,4 +1,4 @@
-import { getLatestVideos } from "@/lib/youtube";
+import { getLatestVideos } from "../lib/youtube";
 
 export default async function HomePage() {
   const videos = await getLatestVideos(6);
