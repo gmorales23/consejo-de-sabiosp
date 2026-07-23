@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Seal } from "./Seal";
+import Image from "next/image";
 
 const NAV = [
   { href: "/capitulos", label: "Capítulos" },
@@ -13,7 +13,13 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b hairline bg-[var(--color-ink)]/95 backdrop-blur">
       <div className="container-page flex items-center justify-between py-4">
         <Link href="/" className="flex items-center gap-3 group">
-          <Seal className="h-9 w-9 text-[var(--color-yellow)] shrink-0" />
+          <Image
+            src="/images/truelogo.svg"
+            alt="Consejo de Sabios"
+            width={36}
+            height={36}
+            className="h-9 w-9 shrink-0"
+          />
           <span
             className="font-[var(--font-display)] text-lg sm:text-xl tracking-wide leading-none group-hover:text-[var(--color-yellow)] transition-colors"
             style={{ fontFamily: "var(--font-display)" }}
