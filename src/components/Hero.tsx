@@ -31,7 +31,7 @@ export function Hero() {
 
         <div className="relative flex items-center justify-center py-6">
           <Image
-            src="/images/truelogo.svg"
+            src="/images/logo-yoda.png"
             alt="Consejo de Sabios - Podcast Logo"
             width={256}
             height={256}
