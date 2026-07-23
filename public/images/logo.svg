@@ -1,0 +1,46 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Consejo de Sabios">
+  <!-- Outer circles -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="4.5"/>
+  <circle cx="100" cy="100" r="89" fill="none" stroke="#1C1C1C" stroke-width="3"/>
+  
+  <!-- Main badge -->
+  <circle cx="100" cy="100" r="85" fill="#1C1C1C"/>
+  
+  <!-- Inner ring -->
+  <circle cx="100" cy="100" r="77.5" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 4.5" opacity="0.8"/>
+  
+  <!-- Head -->
+  <ellipse cx="100" cy="88" rx="29" ry="32" fill="#D4B896" stroke="#1C1C1C" stroke-width="3.5"/>
+  
+  <!-- Wisdom lines -->
+  <path d="M80 72.5 Q100 66 120 72.5" fill="none" stroke="#B89A6F" stroke-width="2.25" stroke-linecap="round"/>
+  <path d="M82.5 68.75 Q100 63.75 117.5 68.75" fill="none" stroke="#B89A6F" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Ears -->
+  <path d="M71.25 85 Q55 72.5 58.75 95 Q60 107.5 71.25 98.75" fill="#D4B896" stroke="#1C1C1C" stroke-width="3.5"/>
+  <path d="M128.75 85 Q145 72.5 141.25 95 Q140 107.5 128.75 98.75" fill="#D4B896" stroke="#1C1C1C" stroke-width="3.5"/>
+  
+  <!-- Eye sockets -->
+  <ellipse cx="88.75" cy="86.25" rx="5.5" ry="7" fill="#8B7355"/>
+  <ellipse cx="111.25" cy="86.25" rx="5.5" ry="7" fill="#8B7355"/>
+  
+  <!-- Eye highlights -->
+  <circle cx="90" cy="85" r="2.25" fill="currentColor"/>
+  <circle cx="112.5" cy="85" r="2.25" fill="currentColor"/>
+  
+  <!-- Nose -->
+  <path d="M100 88.75 Q96.25 95 91.25 98.75" fill="none" stroke="#B89A6F" stroke-width="2.75" stroke-linecap="round"/>
+  
+  <!-- Mouth -->
+  <path d="M90 103.75 Q100 106.25 110 103.75" fill="none" stroke="#B89A6F" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Cheek shading -->
+  <ellipse cx="81.25" cy="95" rx="7" ry="4.5" fill="#C4A67A" opacity="0.5"/>
+  <ellipse cx="118.75" cy="95" rx="7" ry="4.5" fill="#C4A67A" opacity="0.5"/>
+  
+  <!-- Robe hood -->
+  <path d="M70 107.5 Q75 120 100 126.25 Q125 120 130 107.5" fill="#1C1C1C" stroke="currentColor" stroke-width="3"/>
+  
+  <!-- Inner gold ring -->
+  <circle cx="100" cy="100" r="71.25" fill="none" stroke="currentColor" stroke-width="0.75" opacity="0.6"/>
+</svg>
