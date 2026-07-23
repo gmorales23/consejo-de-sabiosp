@@ -14,7 +14,7 @@ export function Header() {
       <div className="container-page flex items-center justify-between py-4">
         <Link href="/" className="flex items-center gap-3 group">
           <Image
-            src="/images/truelogo.svg"
+            src="/images/logo-yoda.png"
             alt="Consejo de Sabios"
             width={36}
             height={36}
