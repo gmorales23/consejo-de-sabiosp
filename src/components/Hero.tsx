@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Seal } from "./Seal";
+import Image from "next/image";
 import { site } from "@/lib/site-config";
 
 export function Hero() {
@@ -30,9 +30,13 @@ export function Hero() {
         </div>
 
         <div className="relative flex items-center justify-center py-6">
-          <Seal
-            className="w-56 h-56 sm:w-72 sm:h-72 text-[var(--color-yellow)]"
-            label="CONSEJO DE SABIOS"
+          <Image
+            src="/images/truelogo.svg"
+            alt="Consejo de Sabios - Podcast Logo"
+            width={256}
+            height={256}
+            className="w-56 h-56 sm:w-72 sm:h-72"
+            priority
           />
         </div>
       </div>
